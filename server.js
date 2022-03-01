@@ -1,7 +1,7 @@
 // Creates an Express application. The express() function is a top-level function exported by the express module
 const express = require('express');
 // Creating a route that the front-end can request data from
-const { animals } = require('./data/animals.json');
+const { animals } = require('./data/animals');
 const PORT = process.env.PORT || 3001;
 // Setting up the server only takes two steps: we need to instantiate the server, then tell it to listen for requests. To instantiate the server, add the following code
 // We assign express() to the app variable so that we can later chain on methods to the Express.js server.
