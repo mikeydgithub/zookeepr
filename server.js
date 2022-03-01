@@ -5,7 +5,7 @@ const { animals } = require('./data/animals.json');
 const PORT = process.env.PORT || 3001;
 // Setting up the server only takes two steps: we need to instantiate the server, then tell it to listen for requests. To instantiate the server, add the following code
 // We assign express() to the app variable so that we can later chain on methods to the Express.js server.
-var app = express();
+const app = express();
 
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray = [];
