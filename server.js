@@ -76,7 +76,8 @@ app.get('/api/animals/:id', (req, res) => {
     } 
 });
 
-
+// app.listen doesnt need to be put at the bottom of the page. it just needs to be placed at any point after app is declared.
+// Putting it on the bottom is common practice. 
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
 });
