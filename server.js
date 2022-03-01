@@ -44,15 +44,32 @@ function filterByQuery(query, animalsArray) {
     }
     return filteredResults;
 }
+
+//JSON response is a single object instead of an array.
+function findById(id, animalsArray) {
+    const result = animalsArray.filter(animal => animal.id === id)[0];
+    return result;
+}
+
 // To add the route, type the following code just before app.listen():
 app.get('/api/animals', (req, res) => {
     let results = animals;
     if (req.query) {
         results = filterByQuery(req.query, results);
     }
-    console.log(req.query)
     res.json(results);
+})
+
+// If no record exists for the animal being searched for, the client recieves a 404 error.
+app.get('/api/animals/:id', (req, res) => {
+    const result = findById(req.params.id, animals);
+    if (result) {
+        res.json(result);
+    } else {
+        res.send(404);
+    } 
 });
+
 // .get method requires two arguments. The first is a string that describes the route the client will have to fetch from.
 // The second is a callback function that will execute every time that rout is accessed with a GET request.
 // The seconday takeaway is that we are using send() method from the res parameter (short for response) to send the string Hello! to our client.
