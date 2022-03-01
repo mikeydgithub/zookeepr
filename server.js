@@ -2,6 +2,7 @@
 const express = require('express');
 // Creating a route that the front-end can request data from
 const { animals } = require('./data/animals.json');
+const PORT = process.env.PORT || 3001;
 // Setting up the server only takes two steps: we need to instantiate the server, then tell it to listen for requests. To instantiate the server, add the following code
 // We assign express() to the app variable so that we can later chain on methods to the Express.js server.
 var app = express();
@@ -55,7 +56,7 @@ app.get('/api/animals', (req, res) => {
 // .get method requires two arguments. The first is a string that describes the route the client will have to fetch from.
 // The second is a callback function that will execute every time that rout is accessed with a GET request.
 // The seconday takeaway is that we are using send() method from the res parameter (short for response) to send the string Hello! to our client.
-app.listen(3001, () => {
-    console.log(`API server now on port 3001!`);
+app.listen(PORT, () => {
+    console.log(`API server now on port ${PORT}!`);
 });
 
