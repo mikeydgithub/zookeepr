@@ -13,12 +13,19 @@ const PORT = process.env.PORT || 3001;
 // Setting up the server only takes two steps: we need to instantiate the server, then tell it to listen for requests. To instantiate the server, add the following code
 // We assign express() to the app variable so that we can later chain on methods to the Express.js server.
 const app = express();
+
 //parse incoming string or array data
 // The express.urlencoded({extended: true}) method is a method built into Express.js. It takes incoming POST data and converts it to key/value pairings that can be accessed in the req.body object. The extended: true option set inside the method call informs our server that there may be sub-array data nested in it as well, so it needs to look as deep into the POST data as possible to parse all of the data correctly.
 app.use(express.urlencoded({ extended: true }));
+
 // parse incoming JSON data
 // The express.json() method we used takes incoming POST data in the form of JSON and parses it into the req.body JavaScript object. Both of the above middleware functions need to be set up every time you create a server that's looking to accept POST data.
 app.use(express.json());
+
+// We added some more middleware to our server and used the express.static() method.
+// The way it works is that we provide a file path to a location in our application (in this case, the public folder) and instruct the server to make these files static resources.
+// This means that all of our front-end code can now be accessed without having a specific server endpoint created for it!
+app.use(express.static('public'));
 
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray = [];
@@ -37,7 +44,7 @@ function filterByQuery(query, animalsArray) {
             // Check the trait against each animal in the filteredResults array.
             // Remeber, it is initially a copy of the animalsArray,
             // but here we're updating it for each trait in the .forEach() loop.
-            // FOr Reach trait being targetd by the filter, the filteredResults
+            // For Reach trait being targetd by the filter, the filteredResults
             // array will then contain only yhe entries that contain the trait,
             // so at the end we'll have an array of animals that have everyone 
             // of the traits when the .forEach() loop is finished.
@@ -133,6 +140,28 @@ app.post('/api/animals', (req, res) => {
     res.json(animal);
     // Now when we receive new post data to be added to the animals.json file, we'll take the length property of the animals array (because it's a one-to-one representation of our animals.json file data) and set that as the id for the new data. Remember, the length property is always going to be one number ahead of the last index of the array so we can avoid any duplicate values.
     }
+});
+
+// the / route points us to the route of the server! This is the route used to create a homepage for a server.
+// unlike most GET and POST routes that deal with creating or return JSON data. this GET route has just one job to do and that is to reponsd with an HTML page in the browser.
+// instead of using res.json(), we're using res.sendFile() and all we have to do is tell them where to find the file we want out our server to read and send back to the client.
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+app.get('/animals', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+app.get('/zookeepers', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+
+//What happens if the client makes a request for a route that doesnt exit?
+// A request to /about for instance would result in an error because there's no route that matches.
+// Users wouldn't be direct to that URL anyway, but just incase, we can use a wildcard route to catch these kinds of requests
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
 // app.listen doesnt need to be put at the bottom of the page. it just needs to be placed at any point after app is declared.
