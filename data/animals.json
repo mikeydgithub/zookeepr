@@ -135,6 +135,15 @@
         "anxious"
       ],
       "id": "13"
+    },
+    {
+      "name": "Mike",
+      "species": "gorilla",
+      "diet": "folivore",
+      "personalityTraits": [
+        "zany"
+      ],
+      "id": "14"
     }
   ]
 }

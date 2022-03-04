@@ -26,13 +26,13 @@ app.use(express.urlencoded({ extended: true }));
 // The express.json() method we used takes incoming POST data in the form of JSON and parses it into the req.body JavaScript object. Both of the above middleware functions need to be set up every time you create a server that's looking to accept POST data.
 app.use(express.json());
 
-app.use('/api', apiRoutes);
-app.use('/', htmlRoutes);
-
 // We added some more middleware to our server and used the express.static() method.
 // The way it works is that we provide a file path to a location in our application (in this case, the public folder) and instruct the server to make these files static resources.
 // This means that all of our front-end code can now be accessed without having a specific server endpoint created for it!
-// app.use(express.static('public'));
+app.use(express.static('public'));
+
+app.use('/api', apiRoutes);
+app.use('/', htmlRoutes);
 
 
 // app.listen doesnt need to be put at the bottom of the page. it just needs to be placed at any point after app is declared.
